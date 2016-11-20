@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-char * compressString(char * input);
+
 
 int main(int argc, char ** argv){
 	// Pointers for our input and output files
@@ -28,11 +28,31 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 
+	int numParts = atoi(argv[2]);
 
+	int numChars = findLength(input); 	//The number of chars in the file
+	
+	int partLength = numChars/numParts; 	//Length of each part, except the first
+	
+	int remainder = numChars % numParts;
+	
+
+	int nLengths[numParts];
+	nLengths[0] = partLength + remainder;
+
+	int i;
+	for (i = 1; i < numParts; i++){
+		nLengths[i] = partLength;
+	}
+
+	int j = fseek(input,  8,SEEK_SET);
+	printf("the input character is %c \n", fgetc(input));
+
+	/*
 	int newChar;
 	int loopChar;
 	char currentChar;	// Char against which to compare
-	int count;			//Hold teh number of occurences for the letter
+	int count;			//Hold the number of occurences for the letter
 	
 	char * buffer = (char * ) malloc(500 * sizeof(char));	//String buffer for sprintf
 	newChar = fgetc(input);
@@ -70,50 +90,16 @@ int main(int argc, char ** argv){
 	fclose(input);
 	fclose(output);
 	
-
+	*/
 	
 }
 
-/*
-char * compressString(char * input){
-	int length = strlen(input);
-	int i = 0;
-	int j = 0;
-	char * newString = (char *) malloc ((length + 1) *sizeof(char));
-	while (input[i] != '\0'){
-		char currentChar = input[i];
-		int count = 0;
-		while (currentChar == input[i]){
-			count = count + 1;
-			i = i + 1;
-		}
-		char * buffer = (char * ) malloc(sizeof(char));
-		sprintf(buffer, "%d", count);
 
-		if (count  > 2){
-			newString[j] = buffer[0];
-			j++;
-			newString[j] = currentChar;
-		}
+int findLength(FILE * fp){
+	int count = 0;
+	int newChar;
+	while ((newChar = fgetc(fp)) != EOF)	
+		count++;
 
-		else if (count == 2){
-			newString[j] = currentChar; 
-			j++;
-			newString[j] = currentChar;
-
-		}
-		else{
-			newString[j] = currentChar;
-		}
-
-		j++;
-		free(buffer);
-
-	}
-
-	newString[j] = '\0';
-
-
-	return newString;
+	return count;
 }
-*/
