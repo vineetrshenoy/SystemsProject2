@@ -48,7 +48,38 @@ int main(int argc, char ** argv){
 	int j = fseek(input,  8,SEEK_SET);
 	printf("the input character is %c \n", fgetc(input));
 
-	/*
+
+	
+
+	
+	
+	fclose(input);
+	fclose(output);
+	
+}
+
+
+void compress(char ** vargp){
+	
+	FILE * fp;
+	FILE * output;
+
+	fp = fopen(vargp[0],"r");
+
+
+	int fileLen = strlen(vargp[0]);
+	char * txt = ".txt";
+	char * outputFile = (char * ) malloc((fileLen + 4 + 4) * sizeof(char));
+	char * buffer = (char *) malloc(4);
+	sprintf(buffer, "%d", atoi(vargp[1]));
+	strcat(outputFile, vargp[0]);
+	strcat(outputFile, buffer);
+	strcat(outputFile, txt);
+
+
+	output = fopen(outputFile, "w");
+	
+
 	int newChar;
 	int loopChar;
 	char currentChar;	// Char against which to compare
@@ -86,13 +117,16 @@ int main(int argc, char ** argv){
 		
 	}
 	
+	
 	//Close the files
-	fclose(input);
-	fclose(output);
 	
-	*/
 	
+	
+
 }
+
+
+
 
 
 int findLength(FILE * fp){
